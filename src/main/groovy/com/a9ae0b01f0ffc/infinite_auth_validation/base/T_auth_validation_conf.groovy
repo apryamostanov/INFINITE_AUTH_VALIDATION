@@ -20,6 +20,18 @@ class T_auth_validation_conf {
     @Value('${jwtTestMode}')
     public String jwtTestMode
 
+    @Value('${jwtKeyStoreType}')
+    static String jwtKeyStoreType
+
+    @Value('${jwtKeyStorePath}')
+    static String jwtKeyStorePath
+
+    @Value('${jwtKeyStorePassword}')
+    static String jwtKeyStorePassword
+
+    @Value('${jwtKeyStoreAlias}')
+    static String jwtKeyStoreAlias
+
     @PostConstruct
     void init() {
         System.out.println("================== " + authenticationModulesPath + "================== ");

@@ -15,7 +15,7 @@ class T_auth_validation_base_5_context extends T_auth_validation_base_4_const {
 
     static T_thread_local<T_auth_validation_base_5_context> p_auth_base_5_context_thread_local = new T_thread_local<T_auth_validation_base_5_context>()
     OkHttpClient p_ok_http_client = new OkHttpClient.Builder().hostnameVerifier(get_unsecure_host_name_verifier()).build()
-    private T_jwt_manager p_jwt_manager = GC_NULL_OBJ_REF as T_jwt_manager
+    private T_jwt_manager p_jwt_manager = new T_jwt_manager()
     @Autowired
     @JsonIgnore
     T_auth_validation_conf p_app_conf

@@ -1,45 +1,13 @@
 package com.a9ae0b01f0ffc.infinite_auth_validation.base
 
-import com.a9ae0b01f0ffc.infinite_auth_validation.client.T_client_response
-import groovy.json.JsonSlurper
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
-import org.json.JSONObject
 
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 class T_auth_validation_base_6_util extends T_auth_validation_base_5_context {
 
-    static T_client_response okhttp_request(String i_url, Integer... i_ignore_error_codes = GC_SKIPPED_ARGS as Integer[]) {
-        Request l_request = new Request.Builder().url(i_url).build()
-        OkHttpClient l_ok_http_client = get_app_context().p_ok_http_client
-        Response l_response
-        try {
-            l_response = l_ok_http_client.newCall(l_request).execute()
-            String l_response_body = l_response.body().string()
-            if (!l_response.isSuccessful()) {
-                if (method_arguments_present(i_ignore_error_codes)) {
-                    if (i_ignore_error_codes.contains(l_response.code())) {
-                        Object l_slurped_conf_api_response_json = GC_NULL_OBJ_REF
-                        JSONObject l_json_object = GC_NULL_OBJ_REF as JSONObject
-                        return new T_client_response(p_slurped_response_json: l_slurped_conf_api_response_json, p_okhttp_response: l_response, p_response_string: l_response_body, p_json_object: l_json_object)
-                    }
-                }
-                //throw new E_api_exception(l_response.code(), "Configuration API error")
-            } else {
-                JsonSlurper l_configuration_api_response_json_slurper = new JsonSlurper()
-                Object l_slurped_conf_api_response_json = l_configuration_api_response_json_slurper.parseText(l_response_body)
-                return new T_client_response(p_slurped_response_json: l_slurped_conf_api_response_json, p_okhttp_response: l_response, p_response_string: l_response_body)
-            }
-        }
-        finally {
-            l_response?.close()
-        }
-    }
 
     static String get_service_name(String i_uri) {
         String LC_RELATIVE_PATH = "middleware/Rest/"
